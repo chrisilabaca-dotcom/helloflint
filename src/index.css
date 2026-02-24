@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-[-0.02em];
+  }
+}
+
+@layer utilities {
+  .glass-pill {
+    @apply backdrop-blur-md bg-white/80 border border-black/5 shadow-sm;
+  }
+}
+
+/* Custom Selection Color */
+::selection {
+  background-color: #E06D45;
+  color: #FFFFFF;
+}
+
+/* Smooth Scrolling where supported */
+html {
+  scroll-behavior: smooth;
+}
