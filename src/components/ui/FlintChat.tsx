@@ -185,13 +185,18 @@ export function FlintChat() {
                                     initial={{ y: 30, rotate: -20, scale: 0.5, opacity: 0 }}
                                     animate={{ y: 0, rotate: 0, scale: 1, opacity: 1 }}
                                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
-                                    className="w-10 h-10 rounded-[14px] bg-white shadow-inner relative overflow-hidden ring-2 ring-white/20"
+                                    className="w-10 h-10 rounded-[14px] bg-white shadow-inner relative overflow-hidden ring-2 ring-white/20 shrink-0"
                                 >
-                                    <img
-                                        src="/images/flint-character.jpg"
-                                        alt="Flint"
-                                        className="w-full h-full object-cover mix-blend-multiply"
+                                    <video
+                                        src="/videos/HelloFlintvide1.MP4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-[120%] h-[120%] max-w-none -ml-[10%] -mt-[10%] object-cover mix-blend-multiply"
                                     />
+                                    {/* Ambient subtle pulse over the character */}
+                                    <div className="absolute inset-0 bg-primary/5 animate-pulse mix-blend-overlay pointer-events-none"></div>
                                 </motion.div>
                                 <motion.div
                                     initial={{ x: -10, opacity: 0 }}

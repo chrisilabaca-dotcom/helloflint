@@ -129,14 +129,6 @@ export function Hero() {
 
           </div>
 
-          {/* New Flint Character Image injected into the Hero scene */}
-          <div className="absolute -right-12 bottom-12 z-20 hero-character hero-character-float pointer-events-none">
-            <img
-              src="/images/flint-character.jpg"
-              alt="Flint AI Assistant"
-              className="w-48 h-auto object-contain mix-blend-multiply opacity-90 drop-shadow-xl"
-            />
-          </div>
         </div>
 
       </div>

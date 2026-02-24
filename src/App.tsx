@@ -4,6 +4,7 @@ import { NoiseOverlay } from './components/ui/NoiseOverlay';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { FlintChat } from './components/ui/FlintChat';
+import { SiteLoader } from './components/ui/SiteLoader';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Pages
@@ -38,6 +39,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="relative w-full min-h-screen selection:bg-accent-action selection:text-white flex flex-col">
+                <SiteLoader />
                 <RouteEffects />
                 <NoiseOverlay />
                 <Navbar />

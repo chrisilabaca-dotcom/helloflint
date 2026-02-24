@@ -65,17 +65,6 @@ export function ValueProps() {
 
             </div>
 
-            {/* Peeking Flint character */}
-            <div
-                ref={flintRef}
-                className="absolute -right-12 top-1/2 -translate-y-1/2 z-0 pointer-events-none opacity-0"
-            >
-                <img
-                    src="/images/flint-character.jpg"
-                    alt="Flint Peeking"
-                    className="w-56 h-auto mix-blend-multiply grayscale-[0.2] opacity-40"
-                />
-            </div>
         </section>
     );
 }
