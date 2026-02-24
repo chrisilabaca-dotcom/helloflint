@@ -107,12 +107,14 @@ export function Pricing() {
                                 </div>
                             </div>
 
-                            <MagneticButton
-                                variant={tier.highlight ? "primary" : "outline"}
-                                className="w-full"
-                            >
-                                Book Discovery Call
-                            </MagneticButton>
+                            <a href="https://cal.com/chris-ilabaca-i6domm" target="_blank" rel="noopener noreferrer" className="block w-full">
+                                <MagneticButton
+                                    variant={tier.highlight ? "primary" : "outline"}
+                                    className="w-full"
+                                >
+                                    Book Discovery Call
+                                </MagneticButton>
+                            </a>
                         </div>
                     ))}
                 </div>

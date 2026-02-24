@@ -1,7 +1,40 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Calendar } from 'lucide-react';
+import { Mail, Calendar, CheckCircle2 } from 'lucide-react';
 
 export function Footer() {
+    const [formData, setFormData] = useState({ name: '', business: '', email: '', message: '' });
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!formData.name || !formData.email) return;
+
+        setStatus('submitting');
+        const payload = {
+            source: "contact_form",
+            timestamp: new Date().toISOString(),
+            ...formData
+        };
+
+        try {
+            await fetch('https://helloflint-webhook.chris-ilabaca.workers.dev/discovery', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            setStatus('success');
+            setFormData({ name: '', business: '', email: '', message: '' });
+            setTimeout(() => setStatus('idle'), 5000);
+        } catch (error) {
+            setStatus('idle');
+        }
+    };
+
     return (
         <footer id="contact" className="bg-background-alt relative overflow-hidden border-t border-primary/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
@@ -41,32 +74,54 @@ export function Footer() {
                     <div className="bg-white p-8 md:p-10 rounded-card shadow-xl shadow-primary/5 border border-primary/5">
                         <h3 className="text-2xl font-heading text-primary mb-6">Send a Quick Message</h3>
 
-                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid sm:grid-cols-2 gap-5">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-primary/80">Name</label>
-                                    <input type="text" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="John Doe" />
+                        {status === 'success' ? (
+                            <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+                                <div className="w-16 h-16 bg-accent-success/10 rounded-full flex items-center justify-center">
+                                    <CheckCircle2 className="w-8 h-8 text-accent-success" />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-primary/80">Business Name</label>
-                                    <input type="text" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="Acme Ltd" />
+                                <div>
+                                    <h4 className="text-xl font-heading text-primary mb-2">Message Sent!</h4>
+                                    <p className="text-primary/70 text-sm">We'll get back to you within 24 hours.</p>
                                 </div>
+                                <button onClick={() => setStatus('idle')} className="text-sm font-medium text-accent-action mt-4 hover:opacity-80 transition-opacity">
+                                    Send another message
+                                </button>
                             </div>
+                        ) : (
+                            <form className="space-y-5" onSubmit={handleSubmit}>
+                                <div className="grid sm:grid-cols-2 gap-5">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-primary/80">Name</label>
+                                        <input required name="name" value={formData.name} onChange={handleChange} type="text" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="John Doe" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-primary/80">Business Name</label>
+                                        <input name="business" value={formData.business} onChange={handleChange} type="text" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="Acme Ltd" />
+                                    </div>
+                                </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-primary/80">Email</label>
-                                <input type="email" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="john@example.com" />
-                            </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-primary/80">Email</label>
+                                    <input required name="email" value={formData.email} onChange={handleChange} type="email" className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all" placeholder="john@example.com" />
+                                </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-primary/80">Message</label>
-                                <textarea rows={4} className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all resize-none" placeholder="How can we help?"></textarea>
-                            </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-primary/80">Message</label>
+                                    <textarea required name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full px-4 py-3 rounded-xl bg-background-alt border-none focus:ring-2 focus:ring-accent-action/20 outline-none transition-all resize-none" placeholder="How can we help?"></textarea>
+                                </div>
 
-                            <button type="submit" className="w-full py-4 rounded-btn bg-accent-trust text-white font-medium hover:bg-accent-trust/90 transition-colors mt-2">
-                                Send Message
-                            </button>
-                        </form>
+                                <button type="submit" disabled={status === 'submitting'} className="w-full py-4 rounded-btn bg-accent-trust text-white font-medium hover:bg-accent-trust/90 transition-colors mt-2 disabled:opacity-50 flex items-center justify-center gap-2">
+                                    {status === 'submitting' ? (
+                                        <>
+                                            <span className="w-4 h-4 rounded-full border-2 border-t-white/30 border-white animate-spin"></span>
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        'Send Message'
+                                    )}
+                                </button>
+                            </form>
+                        )}
                     </div>
 
                 </div>

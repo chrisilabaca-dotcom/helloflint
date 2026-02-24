@@ -25,9 +25,11 @@ export function Navbar() {
                     </Link>
                 </div>
 
-                <MagneticButton variant="primary" className="py-2.5 px-5 text-sm">
-                    Book a Free Call
-                </MagneticButton>
+                <a href="https://cal.com/chris-ilabaca-i6domm" target="_blank" rel="noopener noreferrer">
+                    <MagneticButton variant="primary" className="py-2.5 px-5 text-sm">
+                        Book a Free Call
+                    </MagneticButton>
+                </a>
             </nav>
         </header>
     );

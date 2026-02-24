@@ -6,7 +6,7 @@ const FlintFace = ({ isLarge = false }: { isLarge?: boolean }) => {
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             {/* Blinking Eyes */}
-            <div className={`absolute ${isLarge ? 'top-[30%] gap-2' : 'top-[35%] gap-1.5'} left-0 w-full flex justify-center`}>
+            <div className={`absolute ${isLarge ? 'top-[22%] gap-2.5' : 'top-[25%] gap-2'} left-0 w-full flex justify-center`}>
                 <motion.div
                     animate={{ scaleY: [1, 0.1, 1] }}
                     transition={{ duration: 4, repeat: Infinity, times: [0, 0.05, 0.1], repeatDelay: 1 }}
@@ -19,7 +19,7 @@ const FlintFace = ({ isLarge = false }: { isLarge?: boolean }) => {
                 />
             </div>
             {/* Smile */}
-            <svg className={`absolute ${isLarge ? 'bottom-[30%] w-6 h-3' : 'bottom-[25%] w-4 h-2'} text-white/90`} viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className={`absolute ${isLarge ? 'bottom-[22%] w-6 h-3' : 'bottom-[18%] w-4 h-2'} text-white/90`} viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 2C4 6 12 6 14 2" stroke="currentColor" strokeWidth={isLarge ? "3" : "2.5"} strokeLinecap="round" />
             </svg>
         </div>
@@ -42,6 +42,28 @@ type ChatState = {
 
 const WEBHOOK_URL = 'https://helloflint-webhook.chris-ilabaca.workers.dev/discovery';
 const CAL_URL = 'https://cal.com/chris-ilabaca-i6domm';
+
+// Chat message helper
+const BotMsg = ({ text, delay = 0 }: { text: string | React.ReactNode, delay?: number }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay, duration: 0.4 }}
+        className="bg-background-alt text-primary/90 p-3.5 rounded-2xl rounded-bl-sm max-w-[85%] text-sm"
+    >
+        {text}
+    </motion.div>
+);
+
+const UserMsg = ({ text }: { text: string }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.95, originX: 1, originY: 1 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-accent-trust text-white p-3.5 rounded-2xl rounded-br-sm max-w-[85%] text-sm self-end"
+    >
+        {text}
+    </motion.div>
+);
 
 export function FlintChat() {
     const [state, setState] = useState<ChatState>({
@@ -102,27 +124,7 @@ export function FlintChat() {
         }
     };
 
-    // Chat message helper
-    const BotMsg = ({ text, delay = 0 }: { text: string | React.ReactNode, delay?: number }) => (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay, duration: 0.4 }}
-            className="bg-background-alt text-primary/90 p-3.5 rounded-2xl rounded-bl-sm max-w-[85%] text-sm"
-        >
-            {text}
-        </motion.div>
-    );
 
-    const UserMsg = ({ text }: { text: string }) => (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.95, originX: 1, originY: 1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-accent-trust text-white p-3.5 rounded-2xl rounded-br-sm max-w-[85%] text-sm self-end"
-        >
-            {text}
-        </motion.div>
-    );
 
     return (
         <>
