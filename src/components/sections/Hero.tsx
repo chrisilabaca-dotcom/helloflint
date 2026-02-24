@@ -25,6 +25,11 @@ export function Hero() {
           { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'expo.out' },
           "-=0.8"
         )
+        .fromTo('.hero-character',
+          { x: 30, opacity: 0, rotation: 10 },
+          { x: 0, opacity: 1, rotation: 0, duration: 1, ease: 'back.out(1.5)' },
+          "-=0.6"
+        );
 
       gsap.to('.hero-float', {
         y: -15,
@@ -32,6 +37,16 @@ export function Hero() {
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1
+      });
+
+      gsap.to('.hero-character-float', {
+        y: -10,
+        rotation: -2,
+        duration: 2.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 0.5
       });
 
     }, containerRef);
@@ -112,6 +127,15 @@ export function Hero() {
             <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-primary/5 rounded-full"></div>
             <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] border border-primary/5 rounded-full border-dashed"></div>
 
+          </div>
+
+          {/* New Flint Character Image injected into the Hero scene */}
+          <div className="absolute -right-12 bottom-12 z-20 hero-character hero-character-float pointer-events-none">
+            <img
+              src="/images/flint-character.jpg"
+              alt="Flint AI Assistant"
+              className="w-48 h-auto object-contain mix-blend-multiply opacity-90 drop-shadow-xl"
+            />
           </div>
         </div>
 

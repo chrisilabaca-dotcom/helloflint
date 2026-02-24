@@ -185,9 +185,13 @@ export function FlintChat() {
                                     initial={{ y: 30, rotate: -20, scale: 0.5, opacity: 0 }}
                                     animate={{ y: 0, rotate: 0, scale: 1, opacity: 1 }}
                                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
-                                    className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-accent-action to-[#E06D45] shadow-inner relative overflow-hidden ring-2 ring-white/20"
+                                    className="w-10 h-10 rounded-[14px] bg-white shadow-inner relative overflow-hidden ring-2 ring-white/20"
                                 >
-                                    <FlintFace />
+                                    <img
+                                        src="/images/flint-character.jpg"
+                                        alt="Flint"
+                                        className="w-full h-full object-cover mix-blend-multiply"
+                                    />
                                 </motion.div>
                                 <motion.div
                                     initial={{ x: -10, opacity: 0 }}

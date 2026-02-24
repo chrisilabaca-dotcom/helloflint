@@ -1,10 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { cn } from '../../lib/utils';
 import { Clock, Sparkles } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function ValueProps() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const flintRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!flintRef.current || !sectionRef.current) return;
+
+        gsap.fromTo(flintRef.current,
+            { x: 100, rotation: 10, opacity: 0 },
+            {
+                x: 0,
+                rotation: -5,
+                opacity: 1,
+                duration: 1,
+                ease: 'back.out(1.7)',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top center',
+                    toggleActions: 'play none none reverse'
+                }
+            }
+        );
+
+        // Gentle constant float for this instance too
+        gsap.to(flintRef.current, {
+            y: -8,
+            rotation: 2,
+            duration: 2,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1
+        });
+    }, []);
+
     return (
-        <section className="py-24 bg-background border-t border-primary/5">
+        <section ref={sectionRef} className="py-24 bg-background border-t border-primary/5 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
                 <div className="max-w-3xl mb-16">
@@ -26,6 +63,18 @@ export function ValueProps() {
                     <Card3 />
                 </div>
 
+            </div>
+
+            {/* Peeking Flint character */}
+            <div
+                ref={flintRef}
+                className="absolute -right-12 top-1/2 -translate-y-1/2 z-0 pointer-events-none opacity-0"
+            >
+                <img
+                    src="/images/flint-character.jpg"
+                    alt="Flint Peeking"
+                    className="w-56 h-auto mix-blend-multiply grayscale-[0.2] opacity-40"
+                />
             </div>
         </section>
     );
